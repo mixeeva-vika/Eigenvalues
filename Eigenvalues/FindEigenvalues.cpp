@@ -17,7 +17,7 @@ double FindEigenvalues::ScalarProduct(std::vector<double>& x1, std::vector<doubl
 		sum += x1[i] * x2[i];
 	return sum;
 }
-std::pair<double, std::vector<double>> FindEigenvalues::PowerMethod(const Matrix& A)
+std::pair<double, std::vector<double>> FindEigenvalues::PowerMethod(const Matrix& A, double accuracy)
 {
 	std::vector<double> x_prev = FindEigenvalues::Generate(A.size());
 	x_prev = MultiplyVectorToNumber(x_prev, (1.0 / norma(x_prev)));
@@ -29,19 +29,27 @@ std::pair<double, std::vector<double>> FindEigenvalues::PowerMethod(const Matrix
 	do
 	{
 		++i;
-		//std::cout << "================" << i << "===============" << std::endl;
+		
 		if (i % 5 == 0)
 		{
-			x = MultiplyVectorToNumber(x, 1.0 / norma(x));
+			x = MultiplyVectorToNumber(x, 1.0 / norma(x)); 
+            //std::cout << "================" << i << "===============" << std::endl;
+            //std::cout << "lyambda_prev = " << lyambda_prev << std::endl;
+            //std::cout << "lyambda      = " << lyambda << std::endl;
+            //std::cout << "x = ";
+            //print(x);
 		}
 		x_prev = x;
 		x = A*x_prev;
 		lyambda_prev = lyambda;
 		lyambda = ScalarProduct(x, x_prev) / ScalarProduct(x_prev, x_prev);
 
+        
+        //if (i > 400)
+        //    break;
 
-	} while (fabs(lyambda - lyambda_prev) > eps);
-
+	} while (fabs(lyambda - lyambda_prev) > accuracy);
+    std::cout << "================" << i << "===============" << std::endl;
 	std::vector<double> e = MultiplyVectorToNumber(x, 1.0 / norma(x));
 	
 	return std::make_pair(lyambda, e);
@@ -74,4 +82,15 @@ std::vector<double> FindEigenvalues::MultiplyVectorToNumber(const std::vector<do
 	for (size_t i = 0; i < x.size(); ++i)
 		res[i] = x[i] * coef;
 	return res;
+}
+
+double FindEigenvalues::Residual(const Matrix& A, const std::vector<double>& x, double lymbda)
+{
+    std::vector<double> x1 = A * x;
+    std::vector<double> x2 = MultiplyVectorToNumber(x, lymbda);
+    std::vector<double> x3(x1.size());
+    for (size_t i = 0; i < x1.size(); ++i)
+        x3[i] = x1[i] - x2[i];
+    double delta = norma(x3) / norma(x);
+    return delta;
 }

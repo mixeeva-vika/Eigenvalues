@@ -111,6 +111,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FillingMatrix.cpp" />
+    <ClCompile Include="FindEigenvalues.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="ProxyVector.cpp" />
@@ -120,6 +121,9 @@
     <ClInclude Include="FindEigenvalues.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="ProxyVector.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="a.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

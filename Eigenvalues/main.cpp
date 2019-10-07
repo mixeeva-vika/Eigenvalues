@@ -1,6 +1,5 @@
 #include "FindEigenvalues.h"
 #include "FillingMatrix.h"
-
 void help()
 {
     std::cout << "Enter the size of the matrix of type int" << std::endl;
@@ -86,10 +85,12 @@ int main(int argc, char* argv[])
             }
         }
 
-        std::cout << res << std::endl;
-
-         std::pair<double, std::vector<double>> pair_ = FindEigenvalues::PowerMethod(res);
-         std::cout << pair_.first << std::endl;
+        //std::cout << res << std::endl;
+        const double eps = 0.00000000000001;
+        std::pair<double, std::vector<double>> pair_ = FindEigenvalues::PowerMethod(res, eps);
+        std::cout << pair_.first << std::endl;
+        std::cout << "Residual : " << std::endl;
+        std::cout << FindEigenvalues::Residual(res, pair_.second, pair_.first) << std::endl;
         /*std::cout << "Solution : " << std::endl;
         size_t m = 30;
         MethodJordan::print(x, m);
