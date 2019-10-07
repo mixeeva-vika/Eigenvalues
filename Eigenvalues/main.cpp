@@ -8,10 +8,10 @@ void help()
 
     std::cout << "It is look like : " << std::endl;
     std::cout << "n " << std::endl;
-    std::cout << "a_{1,1} . . . a_{1,n} b_{1}" << std::endl;
-    std::cout << "a_{2,1} . . . a_{2,n} b_{2}" << std::endl;
-    std::cout << ". . .  . . .  . . .  . . . " << std::endl;
-    std::cout << "a_{n,1} . . . a_{n,n} b_{n}" << std::endl;
+    std::cout << "a_{1,1} . . . a_{1,n}" << std::endl;
+    std::cout << "a_{2,1} . . . a_{2,n}" << std::endl;
+    std::cout << ". . .  . . .  . . .  " << std::endl;
+    std::cout << "a_{n,1} . . . a_{n,n}" << std::endl;
 }
 int toInt(const char*s, int*xp)
 {
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
     int flag = 0;
     try
     {
-        std::pair<Matrix, std::vector<double>> res;
+        Matrix res;
         if (argc > 3)
             throw "Incorrect number of argument";
         if (argc == 2)
@@ -86,13 +86,9 @@ int main(int argc, char* argv[])
             }
         }
 
-        std::cout << res.first << std::endl;
+        std::cout << res << std::endl;
 
-        for (int i = 0; i < res.second.size(); ++i)
-            std::cout << res.second[i] << " ";
-        std::cout << std::endl;
-
-         std::pair<double, std::vector<double>> pair_ = FindEigenvalues::PowerMethod(res.first);
+         std::pair<double, std::vector<double>> pair_ = FindEigenvalues::PowerMethod(res);
          std::cout << pair_.first << std::endl;
         /*std::cout << "Solution : " << std::endl;
         size_t m = 30;
